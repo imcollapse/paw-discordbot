@@ -1,0 +1,36 @@
+
+name: Extract and Clean
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Extract ZIP
+        run: |
+          mkdir -p temp_extract
+          unzip -o paw.zip -d temp_extract
+          cp -a temp_extract/. .
+          rm -rf temp_extract
+          rm -f paw.zip
+
+      - name: Delete workflow files
+        run: |
+          rm -rf .github/workflows
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Extract paw and clean workflow"
+          git push
