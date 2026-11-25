@@ -1,0 +1,4 @@
+// Developed by Cosmin
+// paw — hide (hybrid). Logic lives in services/chanTools.js
+
+module.exports = require('../../../services/chanTools').define('hide');
